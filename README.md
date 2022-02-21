@@ -1,5 +1,5 @@
 # 3D Cell Analysis
-![image](https://user-images.githubusercontent.com/11435058/155027527-443175ee-7529-4a7d-9218-a2fd9899903a.png)
+[![DOI](https://zenodo.org/badge/278457466.svg)](https://zenodo.org/badge/latestdoi/278457466)
 
 Cellular Imaging | Zuckerman Institute, Columbia University - https://www.cellularimaging.org
 
@@ -12,4 +12,4 @@ ImageJ macros for 3D region isolation, enhancement, and cell analysis.
 
 If you use this in your work please cite as below:
 
-Luke Hammond. (2022). lahammond/3D_Cell_Analysis: (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.6211089
+Luke Hammond. (2022). lahammond/3D_Cell_Analysis: (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.6212003
