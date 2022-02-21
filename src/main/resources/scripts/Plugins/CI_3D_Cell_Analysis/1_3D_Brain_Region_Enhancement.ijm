@@ -6,6 +6,27 @@
 //	
 // This macro allows for interactive isolation of a brain region. 
 
+//	MIT License
+
+//	Copyright (c) 2018 Luke Hammond lh2881@columbia.edu
+
+//	Permission is hereby granted, free of charge, to any person obtaining a copy
+//	of this software and associated documentation files (the "Software"), to deal
+//	in the Software without restriction, including without limitation the rights
+//	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//	copies of the Software, and to permit persons to whom the Software is
+//	furnished to do so, subject to the following conditions:
+
+//	The above copyright notice and this permission notice shall be included in all
+//	copies or substantial portions of the Software.
+
+//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//	SOFTWARE.
 
 // Initialization
 requires("1.41h");
@@ -13,6 +34,7 @@ starttime = getTime()
 run("Options...", "iterations=1 count=1 edm=Overwrite");
 //run("Set Measurements...", "fit redirect=None decimal=3");
 run("Clear Results"); 
+run("Close All");
 
 // Options Window
 Dialog.create("3D Brain Region Isolation and Enhancement Tool");
@@ -38,10 +60,16 @@ blocksize = Dialog.getNumber();
 DepthCodeON = Dialog.getCheckbox();
 DepthCodeChannels = Dialog.getString();
 
+setBatchMode(true);
+
 // Preparation
 pathin = getDirectory("Input directory");
 print("\\Clear");
-print("3D Brain Region Isolation and Enhancement Tool:");
+print("3D Brain Region Isolation and Enhancement Tool");
+print("Created by Luke Hammond, 2018. Contact: lh2881@columbia.edu");
+print("Cellular Imaging | Zuckerman Institute, Columbia University - https://www.cellularimaging.org");
+
+
 //setBatchMode(true);
 files = getFileList(pathin);						// get an array containing the names of all files in the directory path
 File.mkdir(pathin + "Enhanced");		// output directory
@@ -97,16 +125,19 @@ for(i=0; i<files.length; i++) {
 		setBatchMode(false);
 		// Various options
 		if (CropON == true && AttenON == false ) {
+			setBatchMode("show");
 			setTool("polygon");
 			title = "WaitForUser";
 			msg = "Create an ROI over the region of interest then click \"OK\".";
 			waitForUser(title, msg);
 			roiManager("Add");
 			run("Select None");
+			setBatchMode("hide");
 			
 		}
 
 		if (CropON == true && AttenON == true ) {
+			setBatchMode("show");
 			setTool("polygon");
 			title = "WaitForUser";
 			msg = "Create an ROI over the region of interest and select slice for attentuation correction, then click \"OK\".";
@@ -117,6 +148,7 @@ for(i=0; i<files.length; i++) {
 			Stack.setChannel(ChNum);
 			AttenSlice= getSliceNumber();
 			AttenSlice = AttenSlice/ChNum;
+			setBatchMode("hide");
 			
 			
 		}
@@ -132,7 +164,7 @@ for(i=0; i<files.length; i++) {
 			
 		}
 
-		setBatchMode(false);
+		//setBatchMode(false);
 		// SUBSTACK CAN BE HERE IF I DO MATH FOR ATTENUATION CORRECTION SHIFT!!
 
 		if (SubStackON == true) {
@@ -157,7 +189,7 @@ for(i=0; i<files.length; i++) {
 			getDimensions(width, height, ChNum, slices, frames);
 			
 		}
-		setBatchMode(false);
+		//setBatchMode(false);
 		if (ChNum > 1) {
 			run("Split Channels");
 	
