@@ -11,4 +11,5 @@ ImageJ macros for 3D region isolation, enhancement, and cell analysis.
 4. Use options to adjust detection settings and/or redirect intensity measurements to specific channels. If images have been enhanced with CLAHE, intensity measurements will not reflect true intensity.
 
 If you use this in your work please cite as below:
+
 Luke Hammond. (2022). lahammond/3D_Cell_Analysis: (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.6211089
