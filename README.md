@@ -3,7 +3,7 @@
 
 Cellular Imaging | Zuckerman Institute, Columbia University - https://www.cellularimaging.org
 
-Scripts for 3D region isolation, enhancement, and cell analysis.
+ImageJ macros for 3D region isolation, enhancement, and cell analysis.
 
 1. Run 1 3D Brain Region Enhancement
 2. Follow the prompts to extract an ROI and substack as required. Considerng using CLAHE for local contrast enhancement in difficult samples.
