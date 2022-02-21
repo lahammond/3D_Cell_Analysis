@@ -37,7 +37,7 @@ run("Clear Results");
 run("Close All");
 
 // Options Window
-Dialog.create("3D Brain Region Isolation and Enhancement Tool");
+Dialog.create("3D Region Extraction and Enhancement Tool");
 
 Dialog.addCheckbox("Extract region of interest from image?",false);
 Dialog.addCheckbox("Apply attenuation correction?",true);
@@ -68,6 +68,7 @@ print("\\Clear");
 print("3D Brain Region Isolation and Enhancement Tool");
 print("Created by Luke Hammond, 2018. Contact: lh2881@columbia.edu");
 print("Cellular Imaging | Zuckerman Institute, Columbia University - https://www.cellularimaging.org");
+print("");
 
 
 //setBatchMode(true);
@@ -91,14 +92,12 @@ for(i=0; i<files.length; i++) {
 
 	// get the name of the current file
 	image = files[i];							
-	print("\\Update1: processing file " + (i+1) +"/" + files.length);
+	print("Processing file " + (i+1) +"/" + files.length);
 	// if the current file is a an image then: ALLOW BOTH ND2 AND TIF
 	if (endsWith(image, ".nd2") || endsWith(image, ".tif") ) {		
 		run("Bio-Formats Importer", "open=[" + pathin + image + "] autoscale color_mode=Composite view=Hyperstack stack_order=XYCZT");
-		source_Title = getTitle();
 		rename("source");
-		source_ID = getImageID(); 
-		Tif_Title = subtitle(source_Title);
+		imagename = clean_title(image);
 				
 		getPixelSize(unit, pW, pH);
 		getDimensions(width, height, ChNum, slices, frames);
@@ -122,22 +121,22 @@ for(i=0; i<files.length; i++) {
 		}
 
 		cleanupROI();
-		setBatchMode(false);
+		setBatchMode("show");
 		// Various options
 		if (CropON == true && AttenON == false ) {
-			setBatchMode("show");
+			
 			setTool("polygon");
 			title = "WaitForUser";
 			msg = "Create an ROI over the region of interest then click \"OK\".";
 			waitForUser(title, msg);
 			roiManager("Add");
 			run("Select None");
-			setBatchMode("hide");
+			
 			
 		}
 
 		if (CropON == true && AttenON == true ) {
-			setBatchMode("show");
+
 			setTool("polygon");
 			title = "WaitForUser";
 			msg = "Create an ROI over the region of interest and select slice for attentuation correction, then click \"OK\".";
@@ -148,7 +147,7 @@ for(i=0; i<files.length; i++) {
 			Stack.setChannel(ChNum);
 			AttenSlice= getSliceNumber();
 			AttenSlice = AttenSlice/ChNum;
-			setBatchMode("hide");
+
 			
 			
 		}
@@ -163,7 +162,7 @@ for(i=0; i<files.length; i++) {
 			AttenSlice = AttenSlice/ChNum;
 			
 		}
-
+		setBatchMode("hide");
 		//setBatchMode(false);
 		// SUBSTACK CAN BE HERE IF I DO MATH FOR ATTENUATION CORRECTION SHIFT!!
 
@@ -323,7 +322,7 @@ for(i=0; i<files.length; i++) {
 		}
 		
 		// SAVE
-		saveAs("Tiff", pathin + "Enhanced/"+Tif_Title);
+		saveAs("Tiff", pathin + "Enhanced/"+imagename+".tif");
 
 		
 		close();
@@ -379,12 +378,20 @@ function NumberedArray(maxnum) {
 	return numarr;
 }
 
-function subtitle(imagename){
+function clean_title(imagename){
 	nl=lengthOf(imagename);
-	nl2=nl-4;
+	nl2=nl-3;
 	Sub_Title=substring(imagename,0,nl2);
+	Sub_Title = replace(Sub_Title, "(", "_");
+	Sub_Title = replace(Sub_Title, ")", "_");
+	Sub_Title = replace(Sub_Title, "-", "_");
+	Sub_Title = replace(Sub_Title, "+", "_");
+	Sub_Title = replace(Sub_Title, " ", "_");
+	Sub_Title = replace(Sub_Title, ".", "_");
+	Sub_Title=Sub_Title;
 	return Sub_Title;
 }
+
 function num2array(str,delim){
 	arr = split(str,delim);
 	for(i=0; i<arr.length;i++) {

@@ -13,7 +13,7 @@
 	</parent>
 
 	<groupId>com.ZI</groupId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 
 	<name>CI_3D_Cell_Analysis</name>
 	<url>https://cellularimaging.org</url>

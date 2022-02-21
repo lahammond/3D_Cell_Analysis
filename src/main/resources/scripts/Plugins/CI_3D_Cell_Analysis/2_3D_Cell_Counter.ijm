@@ -113,9 +113,9 @@ print("Created by Luke Hammond, 2018. Contact: lh2881@columbia.edu.");
 print("Cellular Imaging | Zuckerman Institute, Columbia University - https://www.cellularimaging.org");
 
 print("");
-print("Isolate region and enhance as necessary using 1_3D_Region_Enhancment first.");
+print("Isolate region and enhance as necessary using \"1 3D Region Extraction and Enhancment\" first.");
 print("If having difficulty detecting cells, consider using CLAHE, and reducing threshold for cell detection.");
-print("Input folder should be the \\Enhanced\\ subfolder created using 1_3D_Region_Enhancment.");
+print("Input folder should be the \\Enhanced\\ subfolder created using \"1 3D Region Extraction and Enhancment\".");
 
 setBatchMode(true);
 
