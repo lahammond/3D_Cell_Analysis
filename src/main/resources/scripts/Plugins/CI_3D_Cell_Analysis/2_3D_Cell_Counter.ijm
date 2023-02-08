@@ -48,9 +48,9 @@ Dialog.create("Cellular Imaging: 3D Cell Counter");
 Dialog.addNumber("Resolution used for detecting cells (um/px) (0 for original resolution)", 0);
 Dialog.addMessage("---");
 Dialog.addNumber("Select channel containing cells:", 1);
+Dialog.addNumber("Cell radius (px):", 5);
 Dialog.addNumber("Unsharp Mask radius (px, 0 if none):", 25);
 Dialog.addNumber("Unsharp Mask weight:", 0.7);
-Dialog.addNumber("Iterative Outlier Filter radius (px):", 5);
 Dialog.addNumber("Iterative Outlier Filter iterations:", 20);
 Dialog.addNumber("Cell detection threshold:", 200);
 Dialog.addNumber("Minimum cell volume used for cell detection (um):", 150);
@@ -59,9 +59,9 @@ Dialog.addNumber("Redirect intensity measurement to alternative channel (0 if no
 
 Dialog.addMessage("---");
 Dialog.addNumber("Select additional channel containing cells (0 if none):", 0);
+Dialog.addNumber("Cell radius (px):", 5);
 Dialog.addNumber("Unsharp Mask radius (px, 0 if none):", 25);
 Dialog.addNumber("Unsharp Mask weight:", 0.7);
-Dialog.addNumber("Iterative Outlier Filter radius (px):", 5);
 Dialog.addNumber("Iterative Outlier Filter iterations:", 20);
 Dialog.addNumber("Cell detection threshold:", 200);
 Dialog.addNumber("Minimum cell volume used for cell detection (um):", 150);
@@ -76,19 +76,19 @@ Dialog.show();
 FinalRes = Dialog.getNumber();
 //
 CellCh = Dialog.getNumber();
+OSBSRad = Dialog.getNumber();
 USSZ = Dialog.getNumber();
 USMW = Dialog.getNumber();
-OSBSRad = Dialog.getNumber();
-OSBSItr = Dialog.getNumber();
+OSBSItr = Dialog.getNumber();
 Thresh = Dialog.getNumber();
 MinSz = Dialog.getNumber();
 Redirect = Dialog.getNumber();
 
 //
 CellCh2 = Dialog.getNumber();
+OSBSRad2 = Dialog.getNumber();
 USSZ2 = Dialog.getNumber();
 USMW2 = Dialog.getNumber();
-OSBSRad2 = Dialog.getNumber();
 OSBSItr2 = Dialog.getNumber();
 Thresh2 = Dialog.getNumber();
 MinSz2 = Dialog.getNumber();
@@ -193,8 +193,8 @@ for(i=0; i<files.length; i++) {
 
 	//Seed based object creation and cleanup
 	
-	run("3D Maxima Finder", "radiusxy=5 radiusz=5 noise=25");
-	run("3D Watershed", "seeds_threshold=10 image_threshold=10 image=Ch1 seeds=peaks radius=5");
+	run("3D Maxima Finder", "radiusxy="+OSBSRad+" radiusz=5 noise=25");
+	run("3D Watershed", "seeds_threshold=10 image_threshold=10 image=Ch1 seeds=peaks radius="+OSBSRad);
 	close("Ch1");
 	close("peaks");
 	selectWindow("watershed");
@@ -270,9 +270,9 @@ for(i=0; i<files.length; i++) {
 		
 		
 		//Seed based object creation and cleanup
-	
-		run("3D Maxima Finder", "radiusxy=5 radiusz=5 noise=25");
-		run("3D Watershed", "seeds_threshold=10 image_threshold=10 image=Ch2 seeds=peaks radius=5");
+		run("3D Maxima Finder", "radiusxy="+OSBSRad2+" radiusz=5 noise=25");
+		run("3D Watershed", "seeds_threshold=10 image_threshold=10 image=Ch2 seeds=peaks radius="+OSBSRad2);
+
 		close("Ch2");
 		close("peaks");
 		selectWindow("watershed");
